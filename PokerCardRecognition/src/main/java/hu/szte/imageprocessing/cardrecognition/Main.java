@@ -68,6 +68,12 @@ public class Main{
 	private static void whatIsTheHand() throws Exception{
 		ImageToCardsConverter imageToCardsConverter = new ImageToCardsConverter();
 		List<Card> hand = imageToCardsConverter.getCardsFromImage();
+		
+		if(hand == null){
+			System.out.println("Can't find 5 cards on the input image.");
+			return;
+		}
+		
 		HandCounter handCounter = new HandCounter(hand);
 		handCounter.countHand();
 		
