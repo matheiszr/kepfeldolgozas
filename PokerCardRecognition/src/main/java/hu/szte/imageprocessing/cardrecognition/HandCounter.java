@@ -61,8 +61,14 @@ public class HandCounter{
 				case 'A':
 					int valueOfA = 14;
 					for(Card c : hand){
-						if (c.getValue() == '2')
+						if (c.getValue() == '2'){
+							for(Card cTwo : hand){
+								if(cTwo.getValue() == 'Q'){ // flush conjecture
+									valueOfA = 14;
+								}	
+							}
 							valueOfA = 1;
+						}
 					}
 					cardValues[i] = valueOfA;
 					break;
