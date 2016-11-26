@@ -35,51 +35,55 @@ public class HandCounter{
 			
 			for(Card card : hand){
 				switch(card.getSuit()){
-				case HEARTH:
-					pieceOfHearts++;
-					break;
-				case SPADES:
-					piecesOfSpades++;
-					break;
-				case DIAMONDS:
-					piecesOfDiamonds++;
-					break;
-				case CLUBS:
-					piecesOfClubs++;
-					break;
+					case HEARTH:
+						pieceOfHearts++;
+						break;
+					case SPADES:
+						piecesOfSpades++;
+						break;
+					case DIAMONDS:
+						piecesOfDiamonds++;
+						break;
+					case CLUBS:
+						piecesOfClubs++;
+						break;
 				}
 				switch(card.getValue()){
-				case 'J':
-					cardValues[i] = 11;
-					break;
-				case 'Q':
-					cardValues[i] = 12;
-					break;
-				case 'K':
-					cardValues[i] = 13;
-					break;
-				case 'A':
-					int valueOfA = 14;
-					for(Card c : hand){
-						if (c.getValue() == '2'){
-							for(Card cTwo : hand){
-								if(cTwo.getValue() == 'Q'){ // flush conjecture
-									valueOfA = 14;
-								}	
+					case 'T':
+						cardValues[i] = 10;
+						break;
+					case 'J':
+						cardValues[i] = 11;
+						break;
+					case 'Q':
+						cardValues[i] = 12;
+						break;
+					case 'K':
+						cardValues[i] = 13;
+						break;
+					case 'A':
+						int valueOfA = 14;
+						for(Card c : hand){
+							if (c.getValue() == '2'){
+								for(Card cTwo : hand){
+									if(cTwo.getValue() == 'Q'){ // flush conjecture
+										valueOfA = 14;
+									}	
+								}
+								valueOfA = 1;
 							}
-							valueOfA = 1;
 						}
+						cardValues[i] = valueOfA;
+						break;
+					default: // if its a number
+						cardValues[i] = Character.getNumericValue(card.getValue());
+						break;
 					}
-					cardValues[i] = valueOfA;
-					break;
-				default: // if its a number
-					cardValues[i] = card.getValue();
-					break;
-				}
 				i++;
 			}
 			// order the block:
 			cardValues = orderBlock(cardValues);
+			
 			
 			// check all spades is equals?
 			if(pieceOfHearts == 5 || piecesOfSpades == 5 
@@ -89,11 +93,11 @@ public class HandCounter{
 			// check the 5 card is a straight?
 			int howManyIsGood = 0; // if a value is equals the next one + 1 add +1 to this int
 			for(int j = 0; j < cardValues.length; j++){
-				if((j < cardValues.length - 1) && (cardValues[j] == cardValues[j+1])){
+				if((j < cardValues.length-1) && (cardValues[j] == cardValues[j+1]-1)){
 					howManyIsGood++;
 				}
 			}
-			if(howManyIsGood == 5){
+			if(howManyIsGood == 4){
 				isStraight = true;
 			}
 			// results:
