@@ -22,8 +22,8 @@ public class Main{
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			// read the test Image
 			int inputOption = 0;
-			while(inputOption == 3){
-				while(inputOption == 1 || inputOption == 2 || inputOption == 3){
+			while(inputOption != 1 && inputOption != 2 && inputOption != 3){
+				while(inputOption != 1 && inputOption != 2 && inputOption != 3){
 					System.out.println("Pleas choose the following options:");
 					System.out.println("1 : load a test Image fro");
 					System.out.println("2 : count default test Images");
