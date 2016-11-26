@@ -1,8 +1,23 @@
 package hu.szte.imageprocessing.cardrecognition.enums;
 
 public enum EnumCardSuit{
-	HEARTH,
+	HEARTS,
 	SPADES,
 	DIAMONDS,
-	CLUBS,
+	CLUBS;
+	public static EnumCardSuit getEnumFromString(String cardString){
+		cardString = cardString.toUpperCase();
+		switch(cardString){
+			case "HEARTS":
+				return EnumCardSuit.HEARTS;
+			case "SPADES":
+				return EnumCardSuit.SPADES;
+			case "DIAMONDS":
+				return EnumCardSuit.DIAMONDS;
+			case "CLUBS":
+				return EnumCardSuit.CLUBS;
+			default:
+				throw new IllegalArgumentException("Not a valid enum name: " + cardString);
+		}
+	}
 }
