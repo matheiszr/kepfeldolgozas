@@ -16,6 +16,11 @@ import javax.swing.WindowConstants;
 
 import org.opencv.core.Mat;
 
+/**
+ * An image viewer which can viewed an input image from openCV.
+ * @author Zsarnok
+ *
+ */
 public class ImageViewer{
 
 	private JLabel imageView;

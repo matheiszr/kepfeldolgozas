@@ -25,7 +25,7 @@ import org.opencv.highgui.Highgui;
 
 /**
  * This class make from the input a Card entity list.
- * @author Zsarnok
+ * @author pataiadam 
  *
  */
 public class ImageToCardsConverter{
@@ -35,12 +35,12 @@ public class ImageToCardsConverter{
 		learning();
 	}
 	
-	public static List<Card> getCards(String pathToImage){
+	public List<Card> getCards(String pathToImage){
 		Mat img = Highgui.imread(pathToImage, Highgui.CV_LOAD_IMAGE_COLOR);
 		return getEstimatedCards(img);
 	}
 	
-	private static void learning() throws Exception {
+	private void learning() throws Exception {
 		List<String> ImagePaths = new ImagePathReader()
 				.getAllImageFilePathFromADirectory(
 						System.getProperty("user.dir")
@@ -51,7 +51,7 @@ public class ImageToCardsConverter{
 		}
 	}
 
-	private static MatOfKeyPoint analyzeImage(Mat objectImage) {
+	private MatOfKeyPoint analyzeImage(Mat objectImage) {
 		MatOfKeyPoint objectKeyPoints = new MatOfKeyPoint();
 		FeatureDetector featureDetector = FeatureDetector
 				.create(FeatureDetector.SIFT);
@@ -67,7 +67,7 @@ public class ImageToCardsConverter{
 		return objectDescriptors;
 	}
 
-	private static void learnImage(String s) {
+	private void learnImage(String s) {
 		// TODO Auto-generated method stub
 		Mat objectImage = Highgui.imread(s, Highgui.CV_LOAD_IMAGE_COLOR);
 		String[] sp = s.split("\\\\");
@@ -75,7 +75,7 @@ public class ImageToCardsConverter{
 		learningSet.put(card, analyzeImage(objectImage));
 	}
 
-	public static List<Card> sortHashMap(final HashMap<Card, Integer> map) {
+	private List<Card> sortHashMap(final HashMap<Card, Integer> map) {
 	    Set<Card> set = map.keySet();
 	    List<Card> keys = new ArrayList<Card>(set);
 
@@ -90,7 +90,7 @@ public class ImageToCardsConverter{
 	    return keys;
 	}
 
-	private static List<Card> getEstimatedCards(Mat img) {
+	private List<Card> getEstimatedCards(Mat img) {
 		MatOfKeyPoint descriptor = analyzeImage(img);
 		HashMap<Card, Integer> map = new HashMap<Card, Integer>();
 		for (Entry<String, MatOfKeyPoint> e : learningSet.entrySet()) {
@@ -104,7 +104,7 @@ public class ImageToCardsConverter{
 		
 	}
 
-	private static int matcher(String card, MatOfKeyPoint objectDescriptors,
+	private int matcher(String card, MatOfKeyPoint objectDescriptors,
 			MatOfKeyPoint sceneDescriptors) {
 		List<MatOfDMatch> matches = new LinkedList<MatOfDMatch>();
 		if (objectDescriptors.type() != CvType.CV_32F) {

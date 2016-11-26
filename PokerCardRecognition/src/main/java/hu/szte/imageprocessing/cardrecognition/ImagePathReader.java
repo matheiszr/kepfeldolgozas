@@ -10,7 +10,13 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-
+/**
+ * This class contains file path reader methods. Which can get all files path from a library.
+ * U can use this in two ways: read files from a directori which is inside in the jar 
+ * or outside files from your system.
+ * 
+ * @author zsarnok
+ */
 public class ImagePathReader{
 
 	/**
