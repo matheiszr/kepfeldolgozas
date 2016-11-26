@@ -35,18 +35,18 @@ public class HandCounter{
 			
 			for(Card card : hand){
 				switch(card.getSuit()){
-					case HEARTH:
-						pieceOfHearts++;
-						break;
-					case SPADES:
-						piecesOfSpades++;
-						break;
-					case DIAMONDS:
-						piecesOfDiamonds++;
-						break;
-					case CLUBS:
-						piecesOfClubs++;
-						break;
+				case HEARTS:
+					pieceOfHearts++;
+					break;
+				case SPADES:
+					piecesOfSpades++;
+					break;
+				case DIAMONDS:
+					piecesOfDiamonds++;
+					break;
+				case CLUBS:
+					piecesOfClubs++;
+					break;
 				}
 				switch(card.getValue()){
 					case 'T':

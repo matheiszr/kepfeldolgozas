@@ -1,16 +1,16 @@
 package hu.szte.imageprocessing.cardrecognition.enums;
 
 public enum EnumCardSuit{
-	HEARTH,
+	HEARTS,
 	SPADES,
 	DIAMONDS,
 	CLUBS;
-	
+		
 	public static EnumCardSuit getEnumFromString(String cardString){
 		cardString = cardString.toUpperCase();
 		switch(cardString){
 			case "HEARTH":
-				return EnumCardSuit.HEARTH;
+				return EnumCardSuit.HEARTS;
 			case "SPADES":
 				return EnumCardSuit.SPADES;
 			case "DIAMONDS":

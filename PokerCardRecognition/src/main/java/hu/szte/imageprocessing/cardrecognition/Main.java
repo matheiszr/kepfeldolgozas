@@ -1,15 +1,19 @@
 package hu.szte.imageprocessing.cardrecognition;
 
 import hu.szte.imageprocessing.cardrecognition.entity.Card;
+import hu.szte.imageprocessing.cardrecognition.enums.EnumCardSuit;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -74,10 +78,9 @@ public class Main {
 	private static void runDefaultTestImageCounts() throws Exception {
 		List<String> ImagePaths = new ArrayList<String>();
 		ImagePaths.add(System.getProperty("user.dir")
-				+ "\\src\\main\\resources\\test\\test_2.jpg");
+				+ "\\src\\main\\resources\\test\\test_12.jpg");
 		for (String s : ImagePaths) {
-			readAndStoreOneImage(s);
-			whatIsTheHand();
+			whatIsTheHand(getEstimatedCards(s));
 		}
 	}
 
@@ -117,21 +120,42 @@ public class Main {
 	}
 
 	private static void runCountOnInputImage(String imagePath) throws Exception {
-		readAndStoreOneImage(imagePath);
-		whatIsTheHand();
+		//whatIsTheHand();
+	}
+	
+	public static List<Card> sortHashMap(final HashMap<Card, Integer> map) {
+	    Set<Card> set = map.keySet();
+	    List<Card> keys = new ArrayList<Card>(set);
+
+	    Collections.sort(keys, new Comparator<Card>() {
+
+	        @Override
+	        public int compare(Card s1, Card s2) {
+	            return Integer.compare(map.get(s2), map.get(s1)); //reverse order
+	        }
+	    });
+
+	    return keys;
 	}
 
-	private static void readAndStoreOneImage(String pathToImage) {
+	private static List<Card> getEstimatedCards(String pathToImage) {
 		// FIXME kell a beolvasás és a lementése a képnek
 		System.out.println(pathToImage);
 		Mat img = Highgui.imread(pathToImage, Highgui.CV_LOAD_IMAGE_COLOR);
 		MatOfKeyPoint descriptor = analyzeImage(img);
+		HashMap<Card, Integer> map = new HashMap<Card, Integer>();
 		for (Entry<String, MatOfKeyPoint> e : learningSet.entrySet()) {
-			matcher(e.getKey(), e.getValue(), descriptor);
+			int value = matcher(e.getKey(), e.getValue(), descriptor);
+			String[] cs = e.getKey().split("_");
+			Card c = new Card(EnumCardSuit.getEnumFromString(cs[0]), cs[1].charAt(0));
+			map.put(c, value);
 		}
+
+		return sortHashMap(map).subList(0, 5);
+		
 	}
 
-	private static void matcher(String card, MatOfKeyPoint objectDescriptors,
+	private static int matcher(String card, MatOfKeyPoint objectDescriptors,
 			MatOfKeyPoint sceneDescriptors) {
 		List<MatOfDMatch> matches = new LinkedList<MatOfDMatch>();
 		if (objectDescriptors.type() != CvType.CV_32F) {
@@ -149,7 +173,7 @@ public class Main {
 		// System.out.println("Calculating good match list...");
 		LinkedList<DMatch> goodMatchesList = new LinkedList<DMatch>();
 
-		float nndrRatio = 0.6f;
+		float nndrRatio = 0.55f;
 
 		for (int i = 0; i < matches.size(); i++) {
 			MatOfDMatch matofDMatch = matches.get(i);
@@ -163,17 +187,17 @@ public class Main {
 			}
 		}
 
+		
 		if (goodMatchesList.size() >= 7) {
-			System.out.println(card + " : " + goodMatchesList.size());
+			//System.out.println(card + " : " + goodMatchesList.size());
 		}
+		
+		return goodMatchesList.size();
 
 	}
 
-	private static void whatIsTheHand() throws Exception {
-		ImageToCardsConverter imageToCardsConverter = new ImageToCardsConverter();
-		List<Card> hand = imageToCardsConverter.getCardsFromImage();
-
-		if (hand == null) {
+	private static void whatIsTheHand(List<Card> hand) throws Exception {
+		if (hand == null || hand.size()<5) {
 			System.out.println("Can't find 5 cards on the input image.");
 			return;
 		}
