@@ -35,7 +35,7 @@ public class HandCounter{
 			
 			for(Card card : hand){
 				switch(card.getSuit()){
-				case HEARTH:
+				case HEARTS:
 					pieceOfHearts++;
 					break;
 				case SPADES:
