@@ -1,8 +1,10 @@
 package hu.szte.imageprocessing.cardrecognition;
 
+//import java.util.ArrayList;
 import java.util.List;
 
 import hu.szte.imageprocessing.cardrecognition.entity.Card;
+//import hu.szte.imageprocessing.cardrecognition.enums.EnumCardSuit;
 
 /**
  * This class make a count for the hand.
@@ -16,6 +18,27 @@ public class HandCounter{
 	public HandCounter(List<Card> hand){
 		this.hand = hand;
 	}
+	
+//	public static void main(String[] args){
+//		List<Card> hand = new ArrayList<Card>();
+//		Card c1 = new Card(EnumCardSuit.HEARTS, 'K');
+//		Card c2 = new Card(EnumCardSuit.HEARTS, 'Q');
+//		Card c3 = new Card(EnumCardSuit.HEARTS, 'J');
+//		Card c4 = new Card(EnumCardSuit.HEARTS, 'A');
+//		Card c5 = new Card(EnumCardSuit.HEARTS, 'T');
+//		hand.add(c1);
+//		hand.add(c2);
+//		hand.add(c3);
+//		hand.add(c4);
+//		hand.add(c5);
+//		
+//		HandCounter hc = new HandCounter(hand);
+//		try {
+//			System.out.println(hc.countHand());
+//		} catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 	
 	/**
 	 * This method say what the hand is for 5 card.

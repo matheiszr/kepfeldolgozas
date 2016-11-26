@@ -9,7 +9,7 @@ public enum EnumCardSuit{
 	public static EnumCardSuit getEnumFromString(String cardString){
 		cardString = cardString.toUpperCase();
 		switch(cardString){
-			case "HEARTH":
+			case "HEARTS":
 				return EnumCardSuit.HEARTS;
 			case "SPADES":
 				return EnumCardSuit.SPADES;
