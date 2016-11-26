@@ -78,7 +78,7 @@ public class Main {
 	private static void runDefaultTestImageCounts() throws Exception {
 		List<String> ImagePaths = new ArrayList<String>();
 		ImagePaths.add(System.getProperty("user.dir")
-				+ "\\src\\main\\resources\\test\\test_12.jpg");
+				+ "\\src\\main\\resources\\test\\test_8.jpg");
 		for (String s : ImagePaths) {
 			whatIsTheHand(getEstimatedCards(s));
 		}
@@ -203,7 +203,8 @@ public class Main {
 		}
 
 		HandCounter handCounter = new HandCounter(hand);
-		handCounter.countHand();
+
+		System.out.println("Estimated hand: "+handCounter.countHand());
 
 		System.out.println("Cards from image:");
 		StringBuilder sb = new StringBuilder("");
