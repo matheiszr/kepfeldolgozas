@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -25,27 +25,36 @@ import org.opencv.highgui.Highgui;
 
 /**
  * This class make from the input a Card entity list.
- * @author pataiadam 
+ * 
+ * @author pataiadam
  *
  */
-public class ImageToCardsConverter{
+public class ImageToCardsConverter {
 	private static Map<String, MatOfKeyPoint> learningSet = new HashMap<String, MatOfKeyPoint>();
+	private String learningPath = null;
+	private int featureDetectorType = DescriptorExtractor.SIFT;
 
-	public ImageToCardsConverter() throws Exception{
-		learning();
+	public ImageToCardsConverter(int featureDetectorType) throws Exception {
+		this.featureDetectorType=featureDetectorType;
+		this.learningPath = System.getProperty("user.dir")
+				+ "\\src\\main\\resources\\pictures\\learning";
+		learning(this.learningPath);
 	}
-	
-	public List<Card> getCards(String pathToImage){
+
+	public ImageToCardsConverter(int featureDetectorType, String path) throws Exception {
+		this.featureDetectorType=featureDetectorType;
+		this.learningPath = path;
+		learning(this.learningPath);
+	}
+
+	public List<Card> getCards(String pathToImage) {
 		Mat img = Highgui.imread(pathToImage, Highgui.CV_LOAD_IMAGE_COLOR);
 		return getEstimatedCards(img);
 	}
-	
-	private void learning() throws Exception {
+
+	private void learning(String path) throws Exception {
 		List<String> ImagePaths = new ImagePathReader()
-				.getAllImageFilePathFromADirectory(
-						System.getProperty("user.dir")
-								+ "\\src\\main\\resources\\pictures\\learning",
-						false);
+				.getAllImageFilePathFromADirectory(path, false);
 		for (String s : ImagePaths) {
 			learnImage(s);
 		}
@@ -54,14 +63,12 @@ public class ImageToCardsConverter{
 	private MatOfKeyPoint analyzeImage(Mat objectImage) {
 		MatOfKeyPoint objectKeyPoints = new MatOfKeyPoint();
 		FeatureDetector featureDetector = FeatureDetector
-				.create(FeatureDetector.SIFT);
-		// System.out.println("Detecting key points...");
+				.create(featureDetectorType);
 		featureDetector.detect(objectImage, objectKeyPoints);
 
 		MatOfKeyPoint objectDescriptors = new MatOfKeyPoint();
 		DescriptorExtractor descriptorExtractor = DescriptorExtractor
-				.create(DescriptorExtractor.SIFT);
-		// System.out.println("Computing descriptors...");
+				.create(featureDetectorType);
 		descriptorExtractor.compute(objectImage, objectKeyPoints,
 				objectDescriptors);
 		return objectDescriptors;
@@ -76,18 +83,19 @@ public class ImageToCardsConverter{
 	}
 
 	private List<Card> sortHashMap(final HashMap<Card, Integer> map) {
-	    Set<Card> set = map.keySet();
-	    List<Card> keys = new ArrayList<Card>(set);
+		Set<Card> set = map.keySet();
+		List<Card> keys = new ArrayList<Card>(set);
 
-	    Collections.sort(keys, new Comparator<Card>() {
+		Collections.sort(keys, new Comparator<Card>() {
 
-	        @Override
-	        public int compare(Card s1, Card s2) {
-	            return Integer.compare(map.get(s2), map.get(s1)); //reverse order
-	        }
-	    });
+			@Override
+			public int compare(Card s1, Card s2) {
+				return Integer.compare(map.get(s2), map.get(s1)); // reverse
+																	// order
+			}
+		});
 
-	    return keys;
+		return keys;
 	}
 
 	private List<Card> getEstimatedCards(Mat img) {
@@ -96,12 +104,13 @@ public class ImageToCardsConverter{
 		for (Entry<String, MatOfKeyPoint> e : learningSet.entrySet()) {
 			int value = matcher(e.getKey(), e.getValue(), descriptor);
 			String[] cs = e.getKey().split("_");
-			Card c = new Card(EnumCardSuit.getEnumFromString(cs[0]), cs[1].charAt(0));
+			Card c = new Card(EnumCardSuit.getEnumFromString(cs[0]),
+					cs[1].charAt(0));
 			map.put(c, value);
 		}
 
 		return sortHashMap(map).subList(0, 5);
-		
+
 	}
 
 	private int matcher(String card, MatOfKeyPoint objectDescriptors,
@@ -136,12 +145,18 @@ public class ImageToCardsConverter{
 			}
 		}
 
-		
 		if (goodMatchesList.size() >= 7) {
-			//System.out.println(card + " : " + goodMatchesList.size());
+			// System.out.println(card + " : " + goodMatchesList.size());
 		}
-		
+
 		return goodMatchesList.size();
 	}
+	
+	public int getFeatureDetectorType() {
+		return featureDetectorType;
+	}
 
+	public void setFeatureDetectorType(int featureDetectorType) {
+		this.featureDetectorType = featureDetectorType;
+	}
 }
