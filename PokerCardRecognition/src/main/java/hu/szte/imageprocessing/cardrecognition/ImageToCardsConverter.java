@@ -21,18 +21,18 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDMatch;
 import org.opencv.core.MatOfKeyPoint;
-import org.opencv.core.MatOfPoint;
+//import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
+//import org.opencv.core.Size;
 import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.FeatureDetector;
 import org.opencv.features2d.KeyPoint;
 import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
+//import org.opencv.imgproc.Imgproc;
 
 /**
  * This class make from the input a Card entity list.
@@ -221,7 +221,7 @@ public class ImageToCardsConverter {
 				if (poly.isSingular()) {
 					polymap.put(c, poly);
 					map.put(c, goodMatchesList.size());
-					System.out.println(c.toString() + " -> " + goodMatchesList.size());
+					//System.out.println(c.toString() + " -> " + goodMatchesList.size());
 				} else {
 					goodMatchesList = new LinkedList<DMatch>();
 				}

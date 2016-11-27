@@ -42,14 +42,14 @@ public class Main {
 				}
 				if (inputOption == 1) {
 					//FIXME elesben ezeket vissza tenni!!!!!
-					// System.out.println("Pleas type the full path to the Image:");
-					// System.out.println();
-					// String inputPath = br.readLine();
-					// runCountOnInputImage(inputPath); 
+//					 System.out.println("Pleas type the full path to the Image:");
+//					 System.out.println();
+//					 String inputPath = br.readLine();
+//					 runCountOnInputImage(inputPath); 
 				
 					// FIXME elesben ezt kommentezd ki!!!!!
 					String imagePath = System.getProperty("user.dir")
-							+ "\\src\\main\\resources\\test\\test_5.jpg";
+							+ "\\src\\main\\resources\\pictures\\test\\test_5.jpg";
 					runCountOnInputImage(imagePath);
 				}
 				if (inputOption == 2)
