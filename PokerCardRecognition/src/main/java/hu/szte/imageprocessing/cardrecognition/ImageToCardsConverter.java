@@ -83,6 +83,7 @@ public class ImageToCardsConverter {
 			Core.line(img2, p2, p3, new Scalar(0, 255, 0), 4);
 			Core.line(img2, p3, p4, new Scalar(0, 255, 0), 4);
 			Core.line(img2, p4, p1, new Scalar(0, 255, 0), 4);
+			Core.putText(img2, c.toString(), p1, Core.FONT_HERSHEY_SIMPLEX, 1,  new Scalar(255, 0, 0));
 			// System.out.println("kiír");
 		}
 		
@@ -283,7 +284,7 @@ public class ImageToCardsConverter {
 		// System.out.println("Calculating good match list...");
 		LinkedList<DMatch> goodMatchesList = new LinkedList<DMatch>();
 
-		float nndrRatio = 0.65f;
+		float nndrRatio = 0.6f;
 
 		for (int i = 0; i < matches.size(); i++) {
 			MatOfDMatch matofDMatch = matches.get(i);
