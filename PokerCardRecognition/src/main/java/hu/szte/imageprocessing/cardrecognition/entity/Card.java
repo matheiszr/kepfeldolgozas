@@ -32,4 +32,8 @@ public class Card{
 	public void setSuit(EnumCardSuit suit) {
 		this.suit = suit;
 	}
+	
+	public String toString(){
+		return this.suit.toString()+" "+this.value;
+	}
 }
