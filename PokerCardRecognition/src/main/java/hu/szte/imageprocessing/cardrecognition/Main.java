@@ -49,7 +49,7 @@ public class Main {
 				
 					// FIXME elesben ezt kommentezd ki!!!!!
 					String imagePath = System.getProperty("user.dir")
-							+ "\\src\\main\\resources\\test\\test_8.jpg";
+							+ "\\src\\main\\resources\\test\\test_5.jpg";
 					runCountOnInputImage(imagePath);
 				}
 				if (inputOption == 2)
